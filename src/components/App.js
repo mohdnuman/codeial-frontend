@@ -1,19 +1,26 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import { BrowserRouter as Router,Link,Route } from 'react-router-dom';
+import { BrowserRouter as Router,Link,Route,Switch } from 'react-router-dom';
 import {fetchPosts} from '../actions/posts';
 import {PostsList} from './';
-import {Navbar} from './index';
+import {Navbar,Home} from './index';
+import {Page404} from './index';
 
-
-
-const Home=()=>{
+const Login=()=>{
   return (
     <div>
-      Home
+      Login
     </div>
   );
 }
+const Signup=()=>{
+  return (
+    <div>
+      Signup
+    </div>
+  );
+}
+
 
 
 class App extends React.Component {
@@ -29,8 +36,16 @@ class App extends React.Component {
       <div>
         <Navbar/>
         {/* <PostsList posts={posts}/> */}
-        <Route exact path="/" component={Home}/>
-         
+        <Switch>
+          <Route exact path="/" 
+            render={(props)=>{
+              return <Home {...props} posts={posts}/>
+            }}
+          />
+          <Route path="/login" component={Login}/>
+          <Route path="/signup" component={Signup}/>
+          <Route component={Page404}/>
+        </Switch>
       </div>
       </Router>
     );
