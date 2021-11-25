@@ -4,22 +4,22 @@ import { BrowserRouter as Router,Link,Route,Switch } from 'react-router-dom';
 import {fetchPosts} from '../actions/posts';
 import {PostsList} from './';
 import {Navbar,Home} from './index';
-import {Page404} from './index';
+import {Page404,Login,Signup} from './index';
 
-const Login=()=>{
-  return (
-    <div>
-      Login
-    </div>
-  );
-}
-const Signup=()=>{
-  return (
-    <div>
-      Signup
-    </div>
-  );
-}
+// const Login=()=>{
+//   return (
+//     <div>
+//       Login
+//     </div>
+//   );
+// }
+// const Signup=()=>{
+//   return (
+//     <div>
+//       Signup
+//     </div>
+//   );
+// }
 
 
 
