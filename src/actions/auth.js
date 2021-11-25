@@ -1,4 +1,4 @@
-import {LOGIN_FAILED, LOGIN_START, LOGIN_SUCCESS,SIGNUP_FAILED,SIGNUP_SUCCESS,SIGNUP_START} from './actionTypes';
+import {LOGIN_FAILED, LOGIN_START, LOGIN_SUCCESS,SIGNUP_FAILED,SIGNUP_SUCCESS,SIGNUP_START, AUTHENTICATE_USER, LOG_OUT} from './actionTypes';
 import{APIUrls} from '../helpers/urls';
 import getFormBody from '../helpers/utils';
 
@@ -93,4 +93,15 @@ export function signup(email,name,password,confirm_password){
     };
 }
 
+export function authenticateUser(user){
+    return{
+        type:AUTHENTICATE_USER,
+        user
+    } 
+}
+export function logout(){
+    return{
+        type:LOG_OUT,
+    }
+}
 
