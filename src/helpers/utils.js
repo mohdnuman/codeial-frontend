@@ -5,7 +5,7 @@ export default function getFormBody(params){
         let encodedKey=encodeURI(property);
         let encodedValue=encodeURI(params[property]);
 
-        formBody(encodedKey+'='+encodedValue);
+        formBody.push(encodedKey+'='+encodedValue);
     }
 
     return formBody.join('&');  //"username=numan&password=123"

@@ -4,7 +4,7 @@ const initialAUthState={
     user:{},
     error:null,
     isLoggedIn:false,
-    inprogress:false
+    inProgress:false
 }
 
 export default function auth(state=initialAUthState,action){
@@ -12,7 +12,7 @@ export default function auth(state=initialAUthState,action){
         case LOGIN_START:{
             return{
                 ...state,
-                inprogress:true, 
+                inProgress:true, 
             }
         }
         case LOGIN_SUCCESS:{
@@ -20,14 +20,14 @@ export default function auth(state=initialAUthState,action){
                 ...state,
                 user:action.user,
                 isLoggedIn:true,
-                inprogress:false,
+                inProgress:false,
                 error:null
             }
         } 
         case LOGIN_FAILED:{
             return{
                 ...state,
-                inprogress:false,
+                inProgress:false,
                 error:action.error
             }
         }
