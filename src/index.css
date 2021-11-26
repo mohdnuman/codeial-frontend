@@ -482,18 +482,19 @@ nav .nav-links ul li:hover {
   outline: none;
 }
 .settings .edit-btn {
-  border: 1px solid #ef7917;
+  border: 1px solid #090979;
   box-sizing: border-box;
-  color: #ef7917;
+  color: ##090979;
 }
 .settings .save-btn {
-  background: #ef7917;
+  /* background: #ef7917; */
+  background: linear-gradient(90deg, rgba(0,212,255,1) 0%, rgba(9,9,121,1) 71%, rgba(2,0,36,1) 95%);
   color: #fff;
   border: none;
   padding: 10px 20px;
 }
 .settings .go-back {
-  color: #ef7917;
+  color: #090979;
   margin-top: 7px;
   font-size: 13px;
 }

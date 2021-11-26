@@ -10,3 +10,7 @@ export default function getFormBody(params){
 
     return formBody.join('&');  //"username=numan&password=123"
 }
+
+export function getAuthTokenFromLocalStorage(){
+    return localStorage.getItem('token');
+}
