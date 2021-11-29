@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "../chat.css";
-// import * as $ from "jquery";
-// import io from "socket.io-client";
+import io from "socket.io-client";
 import { connect } from "react-redux";
 
 class Chat extends Component {
@@ -11,120 +10,66 @@ class Chat extends Component {
 		this.state = {
 			messages: [], // {content: 'some message', self: true}
 			typedMessage: "",
-			// isMinimized: false
 		};
 
-		// this.socket = io.connect("http://54.237.158.65:5000");
-		// this.userEmail = props.user.email;
+		this.socket = io.connect("http://54.237.158.65:5000");
+		this.userEmail = props.user.email;
 
-		/* if (this.userEmail) {
+		 if (this.userEmail) {
 			this.setupConnection();
-		} */
+		} 
 	}
 
-	// componentDidMount() {
-	// 	if (this.userEmail) {
-	// 		const socketConnection = this.socket;
-	// 		const self = this;
-	// 		this.socket.on("connect", function () {
-	// 			console.log("Connection Established!");
-	// 			socketConnection.emit("join_room", {
-	// 				//for establishing a connextion between the user and the chat server
-	// 				user_email: this.userEmail,
-	// 				chatroom: "codeial"
-	// 			});
 
-	// 			socketConnection.on("user_joined", function (
-	// 				data //server sends a message that user has joined
-	// 			) {
-	// 				console.log("New user Joined!", data);
-	// 			});
-	// 		});
+	setupConnection = () => {
+		const socketConnection = this.socket;
+		const self = this;
+		this.socket.on("connection", function () {
+			console.log("Connection Established!");
+			socketConnection.emit("join_room", {
+				//for establishing a connextion between the user and the chat server
+				user_email: this.userEmail,
+				chatroom: "codeial"
+			});
 
-	// 		this.socket.on("receive_message", function (data) {
-	// 			//add message to state
-	// 			const { messages } = self.state;
-	// 			const messageObject = {};
-	// 			messageObject.content = data.message;
+			socketConnection.on("user_joined", function (
+				data //server sends a message that user has joined
+			) {
+				console.log("New user Joined!", data);
+			});
+		});
 
-	// 			if (data.user_email === self.userEmail) {
-	// 				messageObject.self = true;
-	// 			} else {
-	// 				messageObject.self = false;
-	// 			}
-	// 			self.setState({
-	// 				messages: [...messages, messageObject],
-	// 				typedMessage: ""
-	// 			});
-	// 		});
-	// 	}
-	// }
+		this.socket.on("receive_message", function (data) {
+			//add message to state
+			const { messages } = self.state;
+			const messageObject = {};
+			messageObject.content = data.message;
 
-	// setupConnection = () => {
-	// 	const socketConnection = this.socket;
-	// 	const self = this;
-	// 	this.socket.on("connect", function () {
-	// 		console.log("Connection Established!");
-	// 		socketConnection.emit("join_room", {
-	// 			//for establishing a connextion between the user and the chat server
-	// 			user_email: this.userEmail,
-	// 			chatroom: "codeial"
-	// 		});
+			if (data.user_email === self.userEmail) {
+				messageObject.self = true;
+			} else {
+				messageObject.self = false;
+			}
+			self.setState({
+				messages: [...messages, messageObject],
+				typedMessage: ""
+			});
+		});
+	};
 
-	// 		socketConnection.on("user_joined", function (
-	// 			data //server sends a message that user has joined
-	// 		) {
-	// 			console.log("New user Joined!", data);
-	// 		});
-	// 	});
+	handleSubmit = (event) => {
+		event.preventDefault();
+		const { typedMessage } = this.state;
+		if (typedMessage && this.userEmail) {
+			this.socket.emit("send_message", {
+				message: typedMessage,
+				user_email: this.userEmail,
+				chatroom: "codeial"
+			});
+		}
+	};
 
-	// 	this.socket.on("receive_message", function (data) {
-	// 		//add message to state
-	// 		const { messages } = self.state;
-	// 		const messageObject = {};
-	// 		messageObject.content = data.message;
 
-	// 		if (data.user_email === self.userEmail) {
-	// 			messageObject.self = true;
-	// 		} else {
-	// 			messageObject.self = false;
-	// 		}
-	// 		self.setState({
-	// 			messages: [...messages, messageObject],
-	// 			typedMessage: ""
-	// 		});
-	// 	});
-	// };
-
-	// handleSubmit = (event) => {
-	// 	event.preventDefault();
-	// 	const { typedMessage } = this.state;
-	// 	if (typedMessage && this.userEmail) {
-	// 		this.socket.emit("send_message", {
-	// 			message: typedMessage,
-	// 			user_email: this.userEmail,
-	// 			chatroom: "codeial"
-	// 		});
-	// 	}
-	// };
-
-	// handleMinimize = () => {
-	// 	if (!this.state.isMinimized) {
-	// 		$(".chat-messages").addClass("d-none");
-	// 		$(".chat-footer").addClass("d-none");
-	// 		$(".chat-header").addClass("stick-to-bottom");
-	// 		this.setState({
-	// 			isMinimized: true
-	// 		});
-	// 	} else {
-	// 		$(".chat-messages").removeClass("d-none");
-	// 		$(".chat-footer").removeClass("d-none");
-	// 		$(".chat-header").removeClass("stick-to-bottom");
-	// 		this.setState({
-	// 			isMinimized: false
-	// 		});
-	// 	}
-	// };
 	render() {
 		const { typedMessage, messages } = this.state;
 
