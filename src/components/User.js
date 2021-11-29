@@ -21,6 +21,16 @@ class User extends Component {
             this.props.dispatch(fetchUser(params.userId));
         }
     }
+    componentDidUpdate(prevProps) {
+        const {params:prevParams}=prevProps.match;
+
+        const {params:currentParams}=this.props.match;
+
+        if(currentParams && prevParams && prevParams.userId!==currentParams.userId){
+            this.props.dispatch(fetchUser(currentParams.userId));
+        }
+    }
+    
     componentWillUnmount() {
         this.props.dispatch(clearProfileState());
       

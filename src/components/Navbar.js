@@ -37,7 +37,7 @@ class Navbar extends React.Component{
                 {results.length>0&&(<div className="search-results">
                     <ul>
                         {results.map((user)=>(
-                            <Link to={`user/${user._id}`}>
+                            <Link to={`/user/${user._id}`}>
                             <li className="search-results-row" key={user._id}>
                             <img
                             src="https://cdn-icons.flaticon.com/png/512/1785/premium/1785888.png?token=exp=1637748100~hmac=e9de15ba99477ea0ae3911729f6bb5af"
